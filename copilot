@@ -1,0 +1,1 @@
+convert all of this to TypeScript, convert to camelCase if possible, and remove and '_' from class attributes and their references, and then improve the TypeScript code with good commenting

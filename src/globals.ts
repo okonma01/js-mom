@@ -1,0 +1,141 @@
+import { generateWeights } from './util/weights';
+import { Position } from './core/player/position';
+
+export const posDict = {
+    1: [Position.G],
+    2: [Position.G, Position.GF],
+    3: [Position.GF, Position.F],
+    4: [Position.F, Position.FC, Position.C],
+    5: [Position.FC, Position.C]
+};
+
+export interface WeightDict {
+    [key: string]: [string[], number[]];
+}
+
+export const weightDict: WeightDict = {
+    g: [
+        ['spd', 'pss', 'mid', 'ins', 'diq', 'jmp', 'reb', 'ft', 'hndl', 'tp'],
+        generateWeights(10, 100, 0.9),
+    ],
+    gf: [
+        ['pss', 'spd', 'ins', 'mid', 'tp', 'diq', 'oiq', 'reb', 'jmp', 'ft'],
+        generateWeights(10, 100, 0.7),
+    ],
+    f: [
+        ['hgt', 'mid', 'diq', 'jmp', 'ins', 'spd', 'oiq', 'tp'],
+        [30].concat(generateWeights(7, 70, 1.3)),
+    ],
+    fc: [
+        ['hgt', 'reb', 'ins', 'jmp', 'stre', 'diq', 'oiq', 'stam'],
+        [38].concat(generateWeights(7, 62, 0.7)),
+    ],
+    c: [
+        ['hgt', 'diq', 'reb', 'ins', 'jmp', 'stre'],
+        [26].concat(generateWeights(5, 74, 1.1))
+    ],
+};
+
+
+export interface CompositeRatingDict {
+    [key: string]: [string[], number[]];
+}
+
+export const compositeRatingDict: CompositeRatingDict = {
+    jumpBall: [['hgt', 'jmp'], [1, 0.25]],
+    halfcourtUsage: [['pss', 'hndl', 'oiq'], [1.5, 0.5, 0.5]],
+    fastbreakUsage: [['spd', 'hndl', 'pss', 'oiq'], [1, 1, 1.5, 0.5]],
+    shotUsage: [['ins', 'mid', 'tp', 'spd', 'hgt', 'reb', 'oiq'], [2.5, 1, 1, 0.5, 0.5, 0.5, 0.5]],
+    blocking: [['hgt', 'jmp', 'diq'], [2.5, 1.5, 0.5]],
+    fouling: [['50', 'hgt', 'diq', 'spd'], [3, 1, -1, -1]],
+    rebounding: [['hgt', 'stre', 'jmp', 'reb', 'oiq', 'diq'], [2, 0.1, 0.1, 2, 0.5, 0.5]],
+    stealing: [['50', 'spd', 'diq'], [1, 1, 2]],
+    drawingFoul: [['hgt', 'spd', 'hndl', 'ins', 'oiq'], [1, 1, 1, 0.5, 1]],
+    defenseInside: [['hgt', 'stre', 'spd', 'jmp', 'diq'], [2.5, 1, 0.5, 0.5, 2]],
+    defensePerimeter: [['hgt', 'stre', 'spd', 'jmp', 'diq'], [0.5, 0.5, 2, 0.5, 1]],
+};
+
+
+// Define the list of archetypes
+export const archetypeList: string[] = [
+    'playmaker',
+    'slasher',
+    'slashAndSplash',
+    'shootingSpecialist',
+    '3AndD',
+    'perimeterDefender',
+    'reboundSpecialist',
+    'playmakingBig',
+    'stretchBig',
+    'rollingBig',
+    'rimProtector'
+];
+
+// Define the archetype dictionary
+export interface ArchetypeDict {
+    [key: string]: [string[], number[]];
+}
+
+export const archetypeDict: ArchetypeDict = {
+    G: [
+        ['playmaker', 'slasher', 'slashAndSplash', 'shootingSpecialist', 'perimeterDefender'],
+        [0.30, 0.15, 0.15, 0.15, 0.25]
+    ],
+    GF: [
+        ['playmaker', 'slasher', 'slashAndSplash', '3AndD', 'perimeterDefender'],
+        [0.10, 0.30, 0.20, 0.20, 0.20]
+    ],
+    F: [
+        ['slasher', 'slashAndSplash', '3AndD', 'perimeterDefender', 'reboundSpecialist'],
+        [0.20, 0.15, 0.25, 0.15, 0.25]
+    ],
+    FC: [
+        ['slasher', 'reboundSpecialist', 'playmakingBig', 'stretchBig'],
+        [0.15, 0.30, 0.10, 0.45]
+    ],
+    C: [
+        ['playmakingBig', 'stretchBig', 'rollingBig', 'rimProtector'],
+        [0.15, 0.40, 0.25, 0.20]
+    ]
+};
+
+
+// ratings array format: [spd, stre, jmp, ins, mid, tp, ft, pss, hndl, reb, oiq, diq]
+// Define the interface
+export interface ArchetypeRatings {
+    playmaker: number[];
+    slasher: number[];
+    slashAndSplash: number[];
+    shootingSpecialist: number[];
+    '3AndD': number[];
+    perimeterDefender: number[];
+    reboundSpecialist: number[];
+    playmakingBig: number[];
+    stretchBig: number[];
+    rollingBig: number[];
+    rimProtector: number[];
+}
+
+// Implement the interface with the archetypeRatings object
+export const archetypeRatings: ArchetypeRatings = {
+    playmaker: [7, 4, 6, 7, 10, 5, 10, 14, 14, 6, 14, 6],
+    slasher: [12, 4, 14, 13, 6, 4, 9, 7, 11, 6, 10, 6],
+    slashAndSplash: [12, 4, 14, 13, 9, 14, 11, 7, 11, 6, 10, 6],
+    shootingSpecialist: [7, 4, 6, 7, 14, 14, 14, 5, 6, 5, 10, 6],
+    '3AndD': [13, 10, 8, 7, 4, 11, 7, 4, 6, 12, 10, 11],
+    perimeterDefender: [14, 10, 10, 4, 4, 4, 6, 4, 6, 12, 6, 16],
+    reboundSpecialist: [8, 12, 14, 4, 4, 4, 6, 4, 6, 16, 7, 11],
+    playmakingBig: [6, 10, 8, 6, 6, 4, 8, 13, 10, 6, 12, 6],
+    stretchBig: [6, 10, 8, 6, 12, 12, 11, 5, 6, 6, 10, 6],
+    rollingBig: [6, 13, 11, 13, 8, 3, 5, 3, 4, 9, 10, 6],
+    rimProtector: [4, 16, 14, 5, 3, 3, 3, 3, 3, 14, 6, 15],
+};
+
+// Define the type factors for each position
+export const typeFactors = {
+    G: { spd: 1.05, ft: 1.1, hndl: 1.05, oiq: 1.05 },
+    GF: { ft: 1.05, mid: 1.05, hndl: 1.05, oiq: 1.05 },
+    F: { jmp: 1.05, diq: 1.05 },
+    FC: { reb: 1.05, diq: 1.05 },
+    C: { stre: 1.05, ins: 1.05, ft: 0.95, reb: 1.05, diq: 1.05 },
+};
