@@ -42,8 +42,8 @@ function getFirstName(gender: string | null = null): string {
         throw new Error("Only 'male' and 'female' are supported as gender");
     }
 
-    return getName(files['first' + gender]).charAt(0).toUpperCase() +
-        getName(files['first' + gender]).slice(1);
+    const firstGender = `first${gender.charAt(0).toUpperCase()}${gender.slice(1)}`;
+    return getName(files[firstGender]);
 }
 
 /**

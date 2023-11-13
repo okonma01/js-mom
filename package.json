@@ -1,6 +1,6 @@
 {
   "name": "js-mom",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A simple basketball simulation library",
   "main": "index.js",
   "scripts": {

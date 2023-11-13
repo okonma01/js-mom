@@ -72,28 +72,28 @@ export const archetypeList: string[] = [
 ];
 
 // Define the archetype dictionary
-export interface ArchetypeDict {
-    [key: string]: [string[], number[]];
-}
+export type ArchetypeDict = {
+    [key in Position]: [string[], number[]];
+};
 
 export const archetypeDict: ArchetypeDict = {
-    G: [
+    [Position.G]: [
         ['playmaker', 'slasher', 'slashAndSplash', 'shootingSpecialist', 'perimeterDefender'],
         [0.30, 0.15, 0.15, 0.15, 0.25]
     ],
-    GF: [
-        ['playmaker', 'slasher', 'slashAndSplash', '3AndD', 'perimeterDefender'],
+    [Position.GF]: [
+        ['playmaker', 'slasher', 'slashAndSplash', 'shootingSpecialist', 'perimeterDefender'],
         [0.10, 0.30, 0.20, 0.20, 0.20]
     ],
-    F: [
-        ['slasher', 'slashAndSplash', '3AndD', 'perimeterDefender', 'reboundSpecialist'],
-        [0.20, 0.15, 0.25, 0.15, 0.25]
+    [Position.F]: [
+        ['slasher', 'slashAndSplash', 'shootingSpecialist', 'perimeterDefender', 'reboundSpecialist'],
+        [0.25, 0.15, 0.20, 0.15, 0.25]
     ],
-    FC: [
+    [Position.FC]: [
         ['slasher', 'reboundSpecialist', 'playmakingBig', 'stretchBig'],
         [0.15, 0.30, 0.10, 0.45]
     ],
-    C: [
+    [Position.C]: [
         ['playmakingBig', 'stretchBig', 'rollingBig', 'rimProtector'],
         [0.15, 0.40, 0.25, 0.20]
     ]
@@ -131,11 +131,19 @@ export const archetypeRatings: ArchetypeRatings = {
     rimProtector: [4, 16, 14, 5, 3, 3, 3, 3, 3, 14, 6, 15],
 };
 
+
+// Define TypeFactors interface
+export type TypeFactors = {
+    [key in Position]: {
+        [key: string]: number;
+    };
+}
+
 // Define the type factors for each position
-export const typeFactors = {
-    G: { spd: 1.05, ft: 1.1, hndl: 1.05, oiq: 1.05 },
-    GF: { ft: 1.05, mid: 1.05, hndl: 1.05, oiq: 1.05 },
-    F: { jmp: 1.05, diq: 1.05 },
-    FC: { reb: 1.05, diq: 1.05 },
-    C: { stre: 1.05, ins: 1.05, ft: 0.95, reb: 1.05, diq: 1.05 },
+export const typeFactors: TypeFactors = {
+    [Position.G]: { spd: 1.05, ft: 1.1, hndl: 1.05, oiq: 1.05 },
+    [Position.GF]: { ft: 1.05, mid: 1.05, hndl: 1.05, oiq: 1.05 },
+    [Position.F]: { jmp: 1.05, diq: 1.05 },
+    [Position.FC]: { reb: 1.05, diq: 1.05 },
+    [Position.C]: { stre: 1.05, ins: 1.05, ft: 0.95, reb: 1.05, diq: 1.05 },
 };

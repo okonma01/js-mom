@@ -15,7 +15,7 @@ export class PlayerGameSim {
     id: string;
     name: string;
     heightInInches: number;
-    archetype: string;
+    archetype: string[];
     pos: Position;
     stat: PlayerStat;
     rating: Rating;
@@ -29,7 +29,7 @@ export class PlayerGameSim {
         PlayerGameSim.count += 1;
         this.name = '';
         this.heightInInches = 0;
-        this.archetype = '';
+        this.archetype = [];
         this.pos = Position.G;
         this.stat = new PlayerStat();
         this.rating = new Rating();
