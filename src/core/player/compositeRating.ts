@@ -42,13 +42,16 @@ export class CompositeRating {
             if (this.hasOwnProperty(key)) {
                 for (let i = 0; i < compositeRatingDict[key][0].length; i++) {
                     const rawRating = compositeRatingDict[key][0][i];
-                    if (typeof rawRating !== "string") {
-                        this[key] = Number(this[key]) + (rawRating * compositeRatingDict[key][1][i]) as any;
+                    if (Number.isInteger(+rawRating)) {
+                        this[key] = Number(this[key]) + (Number(rawRating) * compositeRatingDict[key][1][i]) as any;
                     } else {
                         this[key] = Number(this[key]) + (rating.get(rawRating) * compositeRatingDict[key][1][i]) as any;
                     }
                 }
                 this[key] = Math.floor(Number(this[key])) as any;
+                // scale to 0-20
+                const compositeSum = 20 * compositeRatingDict[key][1].reduce((a, b) => a + b, 0);
+                this[key] = Math.round((Number(this[key]) / compositeSum) * 20) as any;
             }
         }
     }

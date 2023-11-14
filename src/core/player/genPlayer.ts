@@ -21,7 +21,9 @@ import { gauss } from '../../util/gauss';
  * @returns a PlayerGameSim object
  */
 export function genPlayer(posNo: number = 0): PlayerGameSim {
-
+    if (posNo < 0 || posNo > 5) {
+        throw new Error('Invalid position number');
+    }
     // generate player height and position
     const posHeightTuple = genPosition(posNo);
     const pos = posHeightTuple[0];
@@ -32,7 +34,7 @@ export function genPlayer(posNo: number = 0): PlayerGameSim {
 
     // generate player ratings
     const pRatings = genRawRating(pArchetype);
-    pRatings.hgt = calculateHeightRating(heightInInches);
+    pRatings.hgt = calculateHeightRating(heightInInches, 20);
 
     // generate player ratings based on position
     for (const key in pRatings) {
@@ -42,8 +44,8 @@ export function genPlayer(posNo: number = 0): PlayerGameSim {
         if (key in typeFactors[pos]) {
             const typeFactor = typeFactors[pos][key];
             let rating = typeFactor * gauss(pRatings[key], 3);
-            rating = bound(rating, 30, 90);
             rating = Math.round(rating);
+            rating = bound(rating, 0, 20);
             pRatings[key] = rating;
         }
     }
