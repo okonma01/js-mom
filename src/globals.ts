@@ -9,28 +9,40 @@ export const posDict = {
     5: [Position.FC, Position.C]
 };
 
-export interface WeightDict {
-    [key: string]: [string[], number[]];
+export type DepthDict = {
+    [key in Position]: number;
+};
+
+export const depthDict: DepthDict = {
+    [Position.G]: 2, // g + gf
+    [Position.GF]: 3, // g + gf
+    [Position.F]: 4, // gf + f
+    [Position.FC]: 3, // f + fc
+    [Position.C]: 3, // fc + c
+};
+
+export type WeightDict = {
+    [key in Position]: [string[], number[]];
 }
 
 export const weightDict: WeightDict = {
-    g: [
+    [Position.G]: [
         ['spd', 'pss', 'mid', 'ins', 'diq', 'jmp', 'reb', 'ft', 'hndl', 'tp'],
         generateWeights(10, 100, 0.9),
     ],
-    gf: [
+    [Position.GF]: [
         ['pss', 'spd', 'ins', 'mid', 'tp', 'diq', 'oiq', 'reb', 'jmp', 'ft'],
         generateWeights(10, 100, 0.7),
     ],
-    f: [
+    [Position.F]: [
         ['hgt', 'mid', 'diq', 'jmp', 'ins', 'spd', 'oiq', 'tp'],
         [30].concat(generateWeights(7, 70, 1.3)),
     ],
-    fc: [
+    [Position.FC]: [
         ['hgt', 'reb', 'ins', 'jmp', 'stre', 'diq', 'oiq', 'stam'],
         [38].concat(generateWeights(7, 62, 0.7)),
     ],
-    c: [
+    [Position.C]: [
         ['hgt', 'diq', 'reb', 'ins', 'jmp', 'stre'],
         [26].concat(generateWeights(5, 74, 1.1))
     ],

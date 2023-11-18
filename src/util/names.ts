@@ -50,7 +50,7 @@ function getFirstName(gender: string | null = null): string {
  * Get a random last name
  * @returns A random last name
  */
-function getLastName(): string {
+export function getLastName(): string {
     return getName(files.last).charAt(0).toUpperCase() +
         getName(files.last).slice(1);
 }

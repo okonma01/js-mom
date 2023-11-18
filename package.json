@@ -4,7 +4,9 @@
   "description": "A simple basketball simulation library",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "playerTest": "jest src/__tests__/player.test.ts",
+    "teamTest": "jest src/__tests__/team.test.ts"
   },
   "repository": {
     "type": "git",
