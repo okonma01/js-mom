@@ -36,6 +36,13 @@ export class TeamGameSim {
         this.players.push(p);
     }
 
+    subPlayers(subIn: PlayerGameSim, subOut: PlayerGameSim) {
+        const inIndex = this.bench.indexOf(subIn);
+        const outIndex = this.lineup.indexOf(subOut);
+        this.lineup[outIndex] = subIn;
+        this.bench[inIndex] = subOut;
+    }
+
     // Sets the lineup for the team
     setLineup(): void {
         const sortedList: PlayerGameSim[] = [];

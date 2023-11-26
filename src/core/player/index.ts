@@ -63,15 +63,23 @@ export class PlayerGameSim {
     }
 
     /**
-     * Clears the player's stats.
+     * Resets all the player's stats.
      */
-    clearStat(): void {
+    resetAllStats(): void {
         for (const s in this.stat) {
             if (s === 'energy') {
                 this.stat[s] = 100;
             } else {
                 this.stat[s] = 0;
             }
+        }
+    }
+
+    resetStat(s: string): void {
+        if (s === 'energy') {
+            this.stat[s] = 100;
+        } else {
+            this.stat[s] = 0;
         }
     }
 
